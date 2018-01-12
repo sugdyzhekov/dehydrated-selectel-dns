@@ -1,0 +1,18 @@
+[Install]
+
+[Unit]
+Description=Get and update SSL certificates from Let's Encrypt
+Documentation=https://github.com/sugdyzhekov/dehydrated-selectel-dns
+ConditionPathExists=/etc/selectel.token
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker pull sugdyzhekov/dehydrated-selectel-dns
+ExecStartPre=-/usr/bin/docker rm le-certificates
+ExecStart=/usr/bin/docker run --rm \
+          --env-file /etc/selectel.token \
+          --name le-certificates \
+          -v /etc/ssl/certs:/workbench \
+          sugdyzhekov/dehydrated-selectel-dns \
+          -d example.com -d www.example.com

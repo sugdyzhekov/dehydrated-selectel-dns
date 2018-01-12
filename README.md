@@ -27,4 +27,23 @@ docker run -e -e SELECTEL_TOKEN='XXXXX' \
 ```
 
 Check `certifcates` directory to obtain your certificates. You may repeat command to renew certificate. 
-Feel free to add it in your cron task list. 
+Feel free to add it in your cron task list.
+
+## Systemd 
+You may want to schedule update invocation. If your system uses `systemd` then you may use unit files from the project 
+repository
+
+* `update-certificates.service`
+* `update-certificates.timer`
+
+### Setup
+1. Create `/etc/selectel.token` file:
+```
+SELECTEL_TOKEN=XXXXX
+```
+2. Copy `update-certificates.service` & `update-certificates.timer` to `/etc/systemd/system` directory
+3. Edit `update-certificates.service` and specify your domains into the last row
+4. Activate timer:
+```
+systemctl enable update-certificates.timer
+```

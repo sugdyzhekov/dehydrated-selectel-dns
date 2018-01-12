@@ -1,0 +1,9 @@
+[Unit]
+Description=Invoke Let's Encrypt Certificates update script every day
+
+[Timer]
+OnCalendar=*-*-* 01:00:00
+Unit=update-certificates.service
+
+[Install]
+WantedBy=multi-user.target
